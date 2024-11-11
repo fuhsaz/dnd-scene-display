@@ -9,12 +9,17 @@ body {
   align-items: center; */
 }
 
+/* Override styles for Amplify login page */
+div[data-amplify-authenticator] > div {
+  padding-top: 100px !important;
+}
+
 /* main {
   display: flex;
   flex-direction: column;
   align-items: stretch;
 }
-
+/*
 button {
   border-radius: 8px;
   border: 1px solid transparent;

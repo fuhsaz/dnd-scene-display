@@ -1,10 +1,14 @@
+import { useAuthenticator } from "@aws-amplify/ui-react";
 import { Link } from "react-router-dom";
 
-interface HeaderProps {
-  temp: string;
-}
+// interface HeaderProps {
+//   temp: string;
+// }
 
-export default function Header({ temp }: HeaderProps) {
+export default function Header() {
+
+  const {signOut} = useAuthenticator();
+
   return (
     <header>
       <nav className="navbar navbar-expand-lg bg-body-tertiary">
@@ -31,6 +35,11 @@ export default function Header({ temp }: HeaderProps) {
               </li>
               <li className="nav-item">
                 <Link to="/manage" className="nav-link" aria-current="page">Manage</Link>
+              </li>
+            </ul>
+            <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
+              <li className="nav-item">
+                <button onClick={signOut}>Sign Out</button>
               </li>
             </ul>
           </div>
