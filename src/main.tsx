@@ -11,6 +11,8 @@ import ErrorPage from "./components/ErrorPage";
 import DisplayPage from "./routes/display";
 import ManagePage from "./routes/manage";
 import { Authenticator } from "@aws-amplify/ui-react";
+import { getScene, listScenes } from "./service/scene";
+import SceneDetails from "./routes/sceneDetails";
 
 Amplify.configure(outputs);
 
@@ -27,6 +29,18 @@ const router = createBrowserRouter([
       {
         path: "/manage",
         element: <ManagePage />,
+        loader: async () => {
+          return listScenes()
+        },
+        children: [
+          {
+            path: ":id",
+            element: <SceneDetails />,
+            loader: async ({ params }) => {
+              return getScene(params.id || "")
+            }
+          }
+        ]
       },
     ],
   },
