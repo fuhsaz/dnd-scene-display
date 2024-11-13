@@ -5,9 +5,9 @@ import { Outlet } from "react-router-dom";
 function App() {
 
   return (
-    <div className="root container-fluid">
+    <div className="root">
       <Header />
-      <main>
+      <main className="container-fluidA">
         <Outlet />
       </main>
       <Footer />

@@ -1,10 +1,6 @@
 import { useAuthenticator } from "@aws-amplify/ui-react";
 import { Link } from "react-router-dom";
 
-// interface HeaderProps {
-//   temp: string;
-// }
-
 export default function Header() {
 
   const {signOut} = useAuthenticator();

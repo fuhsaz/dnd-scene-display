@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import "bootstrap/dist/css/bootstrap.min.css";
 // import "bootswatch/dist/vapor/bootstrap.min.css";
 import "./css/index.css";
-import '@aws-amplify/ui-react/styles.css';
+import "@aws-amplify/ui-react/styles.css";
 import { Amplify } from "aws-amplify";
 import outputs from "../amplify_outputs.json";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
@@ -31,22 +31,22 @@ const router = createBrowserRouter([
       {
         path: "/manage/:type",
         element: <ManagePage />,
-        loader: async ({params}) => {
-          return listScenes(params.type ?? 'all')
+        loader: async ({ params }) => {
+          return listScenes(params.type ?? "all");
         },
         children: [
           {
             path: ":id",
             element: <SceneDetails />,
             loader: async ({ params }) => {
-              return getScene(params.id || "")
-            }
+              return getScene(params.id || "");
+            },
           },
           {
             path: "new",
-            element: <NewScene />
-          }
-        ]
+            element: <NewScene />,
+          },
+        ],
       },
     ],
   },
