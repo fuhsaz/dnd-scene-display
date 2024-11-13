@@ -1,4 +1,4 @@
-import { downloadData, uploadData } from "aws-amplify/storage"
+import { downloadData, remove, uploadData } from "aws-amplify/storage"
 
 export async function uploadImage(id: string, file: File) {
   if (!file) {
@@ -14,7 +14,9 @@ export async function uploadImage(id: string, file: File) {
 } 
 
 export async function getImage(path: string) {
-  return downloadData({
-    path: path
-  })
+  return downloadData({path})
+}
+
+export async function deleteImage(path: string) {
+  return remove({path}) 
 }

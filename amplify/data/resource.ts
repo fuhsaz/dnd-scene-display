@@ -9,19 +9,16 @@ specifies that any user authenticated via an API key can "create", "read",
 const schema = a.schema({
   Scene: a
     .model({
-      id: a.string(),
-      name: a.string(),
-      type: a.string(),
+      id: a.id().required(),
+      name: a.string().required(),
+      type: a.string().required(),
+      table: a.string().required(),
+      orientation: a.string(),
       url: a.string(),
       tags: a.string(),
     })
+    .secondaryIndexes((index) => [index("type").sortKeys(["name"]), index("table").sortKeys(["name"])])
     .authorization((allow) => [allow.owner()]),
-  Todo: a
-    .model({
-      content: a.string(),
-    })
-    .authorization((allow) => [allow.owner()]),
-
 });
 
 export type Schema = ClientSchema<typeof schema>;

@@ -1,21 +1,21 @@
 import { useLoaderData } from "react-router-dom";
-import { SceneResponse } from "../service/scene";
 import { useEffect, useState } from "react";
 import { getImage } from "../service/image";
+import { SceneResponse } from "../types";
+import SceneViewMode from "../components/sceneDetails/ViewMode";
 
 function SceneDetails() {
-
   const scene = useLoaderData() as SceneResponse;
 
-  const [imageObjectUrl, setImageObjectUrl] = useState<string>("") 
+  const [mode, setMode] = useState<string>("view");
+  const [imageObjectUrl, setImageObjectUrl] = useState<string>("");
 
   useEffect(() => {
-
     if (scene.url) {
-      downloadImage(scene.url)
+      downloadImage(scene.url);
     }
 
-    async function downloadImage (url: string) {
+    async function downloadImage(url: string) {
       if (url) {
         const imageResponse = await getImage(url);
         const result = await imageResponse.result;
@@ -23,17 +23,17 @@ function SceneDetails() {
         setImageObjectUrl(URL.createObjectURL(imageBlob));
       }
     }
-   
-  }, [scene.url])
+  }, [scene.url]);
 
   return (
-    <div>
-      <h1>{scene.name}</h1>
-      <p>{scene.type}</p>
-      <p><i>{scene.tags}</i></p>
-      <p>{scene.url}</p>
-      <img src={imageObjectUrl} alt="temp" />
-    </div>
+    <>
+      {mode === "view" ? (
+        <SceneViewMode imageUrl={imageObjectUrl} scene={scene} setMode={setMode} />
+      ) : null}
+      {mode === "edit" ? (
+        <div>Edit</div>
+      ) : null}
+    </>
   );
 }
 

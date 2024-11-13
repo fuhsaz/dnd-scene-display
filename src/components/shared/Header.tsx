@@ -34,7 +34,7 @@ export default function Header() {
                 <Link to="/" className="nav-link" aria-current="page">Home</Link>
               </li>
               <li className="nav-item">
-                <Link to="/manage" className="nav-link" aria-current="page">Manage</Link>
+                <Link to="/manage/all" className="nav-link" aria-current="page">Manage</Link>
               </li>
             </ul>
             <ul className="navbar-nav ms-auto mb-2 mb-lg-0">

@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "bootswatch/dist/pulse/bootstrap.min.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+// import "bootswatch/dist/vapor/bootstrap.min.css";
 import "./css/index.css";
 import '@aws-amplify/ui-react/styles.css';
 import { Amplify } from "aws-amplify";
@@ -13,6 +14,7 @@ import ManagePage from "./routes/manage";
 import { Authenticator } from "@aws-amplify/ui-react";
 import { getScene, listScenes } from "./service/scene";
 import SceneDetails from "./routes/sceneDetails";
+import NewScene from "./routes/newScene";
 
 Amplify.configure(outputs);
 
@@ -27,10 +29,10 @@ const router = createBrowserRouter([
         element: <DisplayPage />,
       },
       {
-        path: "/manage",
+        path: "/manage/:type",
         element: <ManagePage />,
-        loader: async () => {
-          return listScenes()
+        loader: async ({params}) => {
+          return listScenes(params.type ?? 'all')
         },
         children: [
           {
@@ -39,6 +41,10 @@ const router = createBrowserRouter([
             loader: async ({ params }) => {
               return getScene(params.id || "")
             }
+          },
+          {
+            path: "new",
+            element: <NewScene />
           }
         ]
       },
