@@ -9,7 +9,6 @@ export default function ManagePage() {
   return (
     <>
       <div className="d-flex justify-content-between">
-      <h1>Manage</h1>
       <Link to="new" className="d-inline-block btn btn-outline-primary btn-sm my-2 px-2 rounded align-content-center">+ New</Link>
       </div>
       <div className="d-flex gap-5">

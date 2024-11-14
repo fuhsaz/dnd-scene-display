@@ -27,6 +27,9 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <DisplayPage />,
+        loader: async () => {
+          return listScenes("all");
+        }
       },
       {
         path: "/manage/:type",
@@ -45,7 +48,7 @@ const router = createBrowserRouter([
           {
             path: "new",
             element: <NewScene />,
-          },
+          }
         ],
       },
     ],

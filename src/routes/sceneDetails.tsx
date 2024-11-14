@@ -1,8 +1,9 @@
 import { useLoaderData } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { downloadImage } from "../service/image";
-import { SceneResponse } from "../types";
+import { Scene, SceneResponse } from "../types";
 import SceneViewMode from "../components/sceneDetails/ViewMode";
+import SceneForm from "../components/SceneForm";
 
 function SceneDetails() {
   const scene = useLoaderData() as SceneResponse;
@@ -20,6 +21,10 @@ function SceneDetails() {
 
   }, [scene.url]);
 
+  const handleUpdateScene = async (scene: Scene, file: File | null, deleteFile: boolean, redirect: boolean) => {
+    
+  }
+
   return (
     <>
       {mode === "view" ? (
@@ -29,7 +34,9 @@ function SceneDetails() {
           setMode={setMode}
         />
       ) : null}
-      {mode === "edit" ? <div>Edit</div> : null}
+      {mode === "edit" ? 
+        <SceneForm onSave={handleUpdateScene} scene={scene} />
+      : null}
     </>
   );
 }

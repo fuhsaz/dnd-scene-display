@@ -21,6 +21,9 @@ export default function SceneList({ scenes }: SceneListProps) {
             </NavLink>
           </li>
         ))}
+        <li className="nav-item border-left">
+          <NavLink to="/manage/all/new" className="nav-link">New +</NavLink>
+        </li>
       </ul>
       {scenes.map((scene) => {
         return (

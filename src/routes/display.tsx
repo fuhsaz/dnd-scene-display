@@ -1,8 +1,9 @@
-import { useCallback, useEffect, useRef, useState } from "react";
-import { SceneResponse } from "../types";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { SceneResponse, SortedScenes } from '../types';
 import { getScene } from "../service/scene";
 import { downloadImage } from "../service/image";
-import Control from "../components/Control";
+import { useLoaderData } from "react-router-dom";
+import ControlWindow from "../components/control/ControlWindow";
 
 export default function DisplayPage() {
   console.log("display page rendered")
@@ -11,6 +12,39 @@ export default function DisplayPage() {
   const [scene, setScene] = useState<SceneResponse | null>(null);
   const [imageUrl, setImageUrl] = useState<string>("");
   const [isControlVisible, setIsControlVisible] = useState<boolean>(false) 
+
+  const allScenes = useLoaderData() as SceneResponse[];
+  const sortedScenes: SortedScenes = useMemo(() => {
+    const scenes: SortedScenes = {
+      character: [],
+      creature: [],
+      place: [],
+      thing: [],
+    };
+
+    allScenes.forEach((scene) => {
+      switch (scene.type) {
+        case "character":
+          scenes.character.push(scene);
+          break;
+        case "creature":
+          scenes.creature.push(scene);
+          break;
+        case "place":
+          scenes.place.push(scene);
+          break;
+        case "thing":
+          scenes.thing.push(scene);
+          break;
+        default:
+          break;
+      }
+    });
+
+    return scenes;
+  }, [allScenes]);
+
+  const styleSheets = useMemo(() => Array.from(document.styleSheets), [])
 
   const extRef = useRef<Window | null>(null)
 
@@ -75,7 +109,7 @@ export default function DisplayPage() {
         <div>Nothing to display</div>
       )}
       { isControlVisible ?
-        <Control setId={setId} setVisibility={setControlVisibility} ref={extRef} />
+        <ControlWindow setId={setId} setVisibility={setControlVisibility} ref={extRef} sortedScenes={sortedScenes} styles={styleSheets} />
       : null}
     </>
   );

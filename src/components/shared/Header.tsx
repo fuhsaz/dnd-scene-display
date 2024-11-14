@@ -1,9 +1,8 @@
 import { useAuthenticator } from "@aws-amplify/ui-react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 export default function Header() {
-
-  const {signOut} = useAuthenticator();
+  const { signOut } = useAuthenticator();
 
   return (
     <header>
@@ -27,10 +26,26 @@ export default function Header() {
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
                 {/* What is aria-current? */}
-                <Link to="/" className="nav-link" aria-current="page">Home</Link>
+                <NavLink
+                  to="/"
+                  className={({ isActive }) =>
+                    `nav-link ${isActive ? " active" : ""}`
+                  }
+                  aria-current="page"
+                >
+                  Home
+                </NavLink>
               </li>
               <li className="nav-item">
-                <Link to="/manage/all" className="nav-link" aria-current="page">Manage</Link>
+                <NavLink
+                  to="/manage/all"
+                  className={({ isActive }) =>
+                    `nav-link ${isActive ? " active" : ""}`
+                  }
+                  aria-current="page"
+                >
+                  Manage
+                </NavLink>
               </li>
             </ul>
             <ul className="navbar-nav ms-auto mb-2 mb-lg-0">

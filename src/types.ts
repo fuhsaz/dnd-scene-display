@@ -4,6 +4,7 @@ export interface Scene {
   type: string | null;
   url: string | null;
   tags: string | null;
+  orientation: string | null;
 }
 
 export interface SceneResponse extends Scene {
@@ -19,3 +20,11 @@ export const SCENE_TYPES = [
   "Place",
   "Thing"
 ] 
+
+export interface SortedScenes {
+  [key: string]: SceneResponse[];
+  character: SceneResponse[];
+  creature: SceneResponse[];
+  place: SceneResponse[];
+  thing: SceneResponse[];
+}
