@@ -32,6 +32,7 @@ export default function NewScene() {
         id: null,
         name: scene.name,
         type: scene.type,
+        table: "scenes",
         url: path,
         orientation: scene.orientation,
         tags: "",

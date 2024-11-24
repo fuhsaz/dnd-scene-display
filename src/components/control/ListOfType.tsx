@@ -19,7 +19,7 @@ export default function ListOfType({ scenes, filterText, setId }: ListOfTypeProp
     >
       {filteredScenes.map((scene, index) => {
         return (
-          <div key={scene.url} className={index % 2 === 0 ? 'bg-light' : 'bg-white'} onClick={() => {setId(scene.id ?? "")}}>
+          <div key={scene.url} className={`controller-list-item ${index % 2 === 0 ? 'bg-primary' : 'bg-default'}`} onClick={() => {console.log("click"); setId(scene.id ?? "")}}>
             <div className="px-3 py-2">{scene.name}</div>
           </div>
         );

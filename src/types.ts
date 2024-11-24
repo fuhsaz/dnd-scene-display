@@ -5,6 +5,17 @@ export interface Scene {
   url: string | null;
   tags: string | null;
   orientation: string | null;
+  table: string;
+}
+
+export interface SceneUpdateObject {
+  id: string;
+  name: string;
+  type: string;
+  table: string
+  url?: string;
+  tags?: string;
+  orientation?: string;
 }
 
 export interface SceneResponse extends Scene {

@@ -1,21 +1,25 @@
 import { useState } from "react";
 import { SCENE_TYPES, SortedScenes } from '../../types';
 import ListOfType from "./ListOfType";
+import { useAppDispatch } from "../reducers/hooks";
+import { setSelectedSceneId } from "../reducers/sceneSlice";
 
 interface ControlProps {
-  setId: (sceneId: string) => void;
   sortedScenes: SortedScenes;
 }
 
-export default function Control({ setId, sortedScenes }: ControlProps) {
-  console.log("control rendered");
+export default function Control({ sortedScenes }: ControlProps) {
+
+  const dispatch = useAppDispatch();
 
   const [selectedTab, setSelectedTab] = useState<string>("character");
   const [filterText, setFilterText] = useState<string>("");
 
-  console.log(sortedScenes);
+  const setId = (id: string) => {
+    dispatch(setSelectedSceneId(id));
+  }; 
 
-  return (
+  return ( 
     <div>
       <div className="container">
         <ul className="nav nav-tabs">

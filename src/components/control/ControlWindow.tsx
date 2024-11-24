@@ -7,18 +7,19 @@ import React, {
 import { createPortal } from "react-dom";
 import { SortedScenes } from "../../types";
 import Control from "./Control";
+import { useAppDispatch } from "../reducers/hooks";
+import { setControlVisibility } from "../reducers/appStateSlice";
 
 interface ControlWindowProps {
-  setId: (sceneId: string) => void;
   // Add a close button to the control
-  setVisibility: (isVisible: boolean) => void;
   sortedScenes: SortedScenes;
   styles: CSSStyleSheet[];
 }
 
 const ControlWindow = forwardRef(
-  ({ setId, setVisibility, sortedScenes, styles }: ControlWindowProps, ref) => {
-    console.log("control window rendered");
+  ({ sortedScenes, styles }: ControlWindowProps, ref) => {
+
+    const dispatch = useAppDispatch();
 
     const windowRef = useRef<Window | null>(null);
     const containerElement: HTMLDivElement = document.createElement("div");
@@ -46,7 +47,7 @@ const ControlWindow = forwardRef(
     function openWindowAndCopyStyles() {
       const features = "width=400, height=500, left=300, top=200";
       windowRef.current = window.open("", "", features);
-
+ 
       windowRef.current?.document.body.appendChild(containerElement);
 
       styles.forEach((stylesheet) => {
@@ -71,13 +72,13 @@ const ControlWindow = forwardRef(
 
     function close() {
       windowRef.current?.close();
-      setVisibility(false);
+      dispatch(setControlVisibility(false));
     }
 
     return (
       <>
         {createPortal(
-          <Control setId={setId} sortedScenes={sortedScenes} />,
+          <Control sortedScenes={sortedScenes} />,
           containerElement
         )}
       </>
@@ -85,4 +86,4 @@ const ControlWindow = forwardRef(
   }
 );
 
-export default React.memo(ControlWindow);
+  export default React.memo(ControlWindow);

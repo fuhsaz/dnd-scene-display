@@ -1,11 +1,14 @@
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useNavigate, useRevalidator } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { downloadImage } from "../service/image";
+import { downloadImage, uploadImage } from "../service/image";
 import { Scene, SceneResponse } from "../types";
 import SceneViewMode from "../components/sceneDetails/ViewMode";
 import SceneForm from "../components/SceneForm";
+import { updateScene } from "../service/scene";
 
 function SceneDetails() {
+  const { revalidate } = useRevalidator();
+  const navigate = useNavigate();
   const scene = useLoaderData() as SceneResponse;
 
   const [mode, setMode] = useState<string>("view");
@@ -22,7 +25,38 @@ function SceneDetails() {
   }, [scene.url]);
 
   const handleUpdateScene = async (scene: Scene, file: File | null, deleteFile: boolean, redirect: boolean) => {
-    
+    const imageId = crypto.randomUUID();
+    let path = "";
+
+    if (file) {
+      const result = await uploadImage(imageId, file);
+      console.log("result:", result);
+      
+      if (!result) {
+        console.error("no result returned from uploadData");
+        return;
+      }
+
+      path = result.path;
+    } 
+
+    if (!file && deleteFile) {
+      scene.url = path;
+    }
+
+    try {
+      const updatedScene = await updateScene(scene);
+      console.log("Updated scene:", updatedScene);
+
+      if (redirect) {
+        navigate(`/manage/${scene.type}`);
+      } else {
+        revalidate();
+      }
+    } catch (e) {
+      console.error("error updating scene:", e);
+    }
+
   }
 
   return (

@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "bootstrap/dist/css/bootstrap.min.css";
-// import "bootswatch/dist/vapor/bootstrap.min.css";
+// import "bootstrap/dist/css/bootstrap.min.css";
+import "bootswatch/dist/vapor/bootstrap.min.css";
 import "./css/index.css";
 import "@aws-amplify/ui-react/styles.css";
 import { Amplify } from "aws-amplify";
@@ -15,6 +15,8 @@ import { Authenticator } from "@aws-amplify/ui-react";
 import { getScene, listScenes } from "./service/scene";
 import SceneDetails from "./routes/sceneDetails";
 import NewScene from "./routes/newScene";
+import { Provider } from "react-redux";
+import store from "./store";
 
 Amplify.configure(outputs);
 
@@ -58,7 +60,10 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <Authenticator>
-      <RouterProvider router={router} />
+      <Provider store={store}>
+        <RouterProvider router={router} />
+
+      </Provider>
     </Authenticator>
   </React.StrictMode>
 );

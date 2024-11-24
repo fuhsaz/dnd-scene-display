@@ -12,7 +12,7 @@ export default function ManagePage() {
       <Link to="new" className="d-inline-block btn btn-outline-primary btn-sm my-2 px-2 rounded align-content-center">+ New</Link>
       </div>
       <div className="d-flex gap-5">
-        <div>
+        <div className="flex-shrink-1">
           <SceneList scenes={scenes}/>
         </div>
         <div className="flex-grow-1">

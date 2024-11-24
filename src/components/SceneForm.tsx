@@ -148,6 +148,7 @@ export default function SceneForm({ onSave, scene }: SceneFormProps) {
                       id: null,
                       name,
                       type,
+                      table: "scenes",
                       url: null,
                       tags: null,
                       orientation,

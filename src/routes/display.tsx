@@ -1,17 +1,18 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { SceneResponse, SortedScenes } from '../types';
+import { useEffect, useMemo, useRef, useState } from "react";
+import { SceneResponse, SortedScenes } from "../types";
 import { getScene } from "../service/scene";
-import { downloadImage } from "../service/image";
 import { useLoaderData } from "react-router-dom";
 import ControlWindow from "../components/control/ControlWindow";
+import SceneDisplay from "../components/SceneDisplay";
+import { useAppSelector } from "../components/reducers/hooks";
 
 export default function DisplayPage() {
-  console.log("display page rendered")
+
   const [loading, setLoading] = useState<boolean>(false);
-  const [sceneId, setSceneId] = useState<string>("");
   const [scene, setScene] = useState<SceneResponse | null>(null);
-  const [imageUrl, setImageUrl] = useState<string>("");
-  const [isControlVisible, setIsControlVisible] = useState<boolean>(false) 
+
+  const isControlVisible = useAppSelector((state) => state.appState.isControlVisible);
+  const sceneId = useAppSelector((state) => state.scenes.selectedSceneId);
 
   const allScenes = useLoaderData() as SceneResponse[];
   const sortedScenes: SortedScenes = useMemo(() => {
@@ -44,17 +45,9 @@ export default function DisplayPage() {
     return scenes;
   }, [allScenes]);
 
-  const styleSheets = useMemo(() => Array.from(document.styleSheets), [])
+  const styleSheets = useMemo(() => Array.from(document.styleSheets), []);
 
-  const extRef = useRef<Window | null>(null)
-
-  const setId = useCallback((sceneId: string) => {
-    setSceneId(sceneId)
-  }, [setSceneId])
-
-  const setControlVisibility = useCallback((visibility: boolean) => {
-    setIsControlVisible(visibility)
-  }, [setIsControlVisible])
+  const extRef = useRef<Window | null>(null);
 
   useEffect(() => {
     if (sceneId) {
@@ -67,50 +60,24 @@ export default function DisplayPage() {
 
       if (response !== null) {
         setScene(response);
-
-        const downloadedImageUrl = await downloadImage(response.url ?? "")
-        setImageUrl(downloadedImageUrl)
       }
       setLoading(false);
     }
   }, [sceneId]);
 
-  function toggleControl() {
-    if (!isControlVisible) {
-      setIsControlVisible(true)
-    } else {
-      extRef.current?.close();
-      setIsControlVisible(false)
-    }
-  }
-
   return (
     <>
-      <div>Display</div>
-      <div>
-        <h1>Temp</h1>
-        <input
-          type="text"
-          onChange={(e) => {
-            setSceneId(e.target.value);
-          }}
+      {loading ? <div className="alert alert-primary mt-4">Loading...</div> : null}
+      {!loading && scene ? <SceneDisplay scene={scene} /> : null}
+      {!loading && !scene ? <div>Nothing to display</div> : null}
+
+      {isControlVisible ? (
+        <ControlWindow
+          ref={extRef}
+          sortedScenes={sortedScenes}
+          styles={styleSheets}
         />
-        <button type="button" onClick={() => {toggleControl()}}>{isControlVisible ? 'Hide' : 'Show'} Control</button>
-      </div>
-      {scene ? (
-        <div className="d-flex flex-grow-1 justify-content-center">
-          <img
-            src={imageUrl ?? undefined}
-            alt={scene?.name || ""}
-            className="img-fluid"
-          />
-        </div>
-      ) : (
-        <div>Nothing to display</div>
-      )}
-      { isControlVisible ?
-        <ControlWindow setId={setId} setVisibility={setControlVisibility} ref={extRef} sortedScenes={sortedScenes} styles={styleSheets} />
-      : null}
-    </>
+      ) : null}
+    </> 
   );
 }

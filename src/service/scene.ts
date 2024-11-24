@@ -1,4 +1,4 @@
-import { Scene, SceneResponse } from "../types";
+import { Scene, SceneResponse, SceneUpdateObject } from "../types";
 import { Client } from "../client";
 
 export async function getScene(id: string): Promise<SceneResponse | null> {
@@ -45,6 +45,48 @@ export async function createScene(scene: Scene): Promise<SceneResponse | null> {
     
   } catch (e) {
     console.error("error while creating scene:", e);
+    return null;
+  }
+}
+
+export async function updateScene(scene: Scene): Promise<SceneResponse | null> {
+  if (!scene.id) {
+    console.error("scene id is required");
+    return null;
+  }
+  if (!scene.name) {
+    console.error("scene name is required");
+    return null;
+  }
+  if (!scene.type) {
+    console.error("scene type is required")
+    return null;
+  }
+  try {
+    const sceneWithUpdates: SceneUpdateObject = {
+      id: scene.id as string,
+      name: scene.name,
+      type: scene.type,
+      table: "scenes",
+      orientation: scene.orientation ?? "portrait",
+    }
+    if (scene.url) {
+      sceneWithUpdates.url = scene.url;
+    }
+    if (scene.tags) {
+      sceneWithUpdates.tags = scene.tags;
+    }
+    const { errors, data: updatedScene } = await Client.models.Scene.update(sceneWithUpdates);
+
+    if (errors) {
+      console.error("errors returned from updating scene:", errors);
+      return null;
+    }
+
+    return updatedScene;
+    
+  } catch (e) {
+    console.error("error while updating scene:", e);
     return null;
   }
 }
