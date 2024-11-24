@@ -1,4 +1,4 @@
-import { Link, Outlet, useLoaderData } from "react-router-dom";
+import { Outlet, useLoaderData } from "react-router-dom";
 import { SceneResponse } from "../types";
 import SceneList from "../components/SceneList";
 
@@ -8,19 +8,13 @@ export default function ManagePage() {
 
   return (
     <>
-      <div className="d-flex justify-content-between">
-      <Link to="new" className="d-inline-block btn btn-outline-primary btn-sm my-2 px-2 rounded align-content-center">+ New</Link>
-      </div>
-      <div className="d-flex gap-5">
+      <div className="h-100 d-flex gap-5">
         <div className="flex-shrink-1">
           <SceneList scenes={scenes}/>
         </div>
         <div className="flex-grow-1">
           <Outlet />
         </div>
-      </div>
-      <div>
-        
       </div>
     </>
   );

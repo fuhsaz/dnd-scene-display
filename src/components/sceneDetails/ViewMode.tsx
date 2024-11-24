@@ -1,4 +1,5 @@
 import { SceneResponse } from "../../types"
+import SceneDisplay from "../SceneDisplay"
 
 interface SceneViewModeProps {
   imageUrl: string,
@@ -7,20 +8,11 @@ interface SceneViewModeProps {
   setMode: React.Dispatch<React.SetStateAction<string>>
 }
 
-export default function SceneViewMode({imageUrl, scene}: SceneViewModeProps) {
+export default function SceneViewMode({scene}: SceneViewModeProps) {
   
   return(
-    <div className="d-flex gap-5">
-      <div>
-        <h1>{scene.name}</h1>
-        <p>{scene.type}</p>
-        <p>
-          <i>{scene.tags}</i>
-        </p>
-      </div>
-      <div className="d-flex flex-grow-1 justify-content-center">
-        <img src={imageUrl} alt={scene.name || ""} className="img-fluid" />
-      </div>
+    <div className="h-100">
+      <SceneDisplay scene={scene} showInfo={true}/>
     </div>
   )
 }

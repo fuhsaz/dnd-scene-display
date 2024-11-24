@@ -11,7 +11,7 @@ body {
   align-items: center; */
 } 
 
-#root, .root {
+#root {
   height: 100%;
 }
 
@@ -73,7 +73,7 @@ div[data-amplify-authenticator] > div {
 }
 
 .landscape {
-  width: 100%;
+  width: 100%; 
 }
 
 /* main {

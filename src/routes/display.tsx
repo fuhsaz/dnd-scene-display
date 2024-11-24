@@ -68,7 +68,7 @@ export default function DisplayPage() {
   return (
     <>
       {loading ? <div className="alert alert-primary mt-4">Loading...</div> : null}
-      {!loading && scene ? <SceneDisplay scene={scene} /> : null}
+      {!loading && scene ? <SceneDisplay showInfo={false} scene={scene} /> : null}
       {!loading && !scene ? <div>Nothing to display</div> : null}
 
       {isControlVisible ? (

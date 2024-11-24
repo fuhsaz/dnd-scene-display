@@ -4,11 +4,11 @@ import { SceneResponse } from "../types";
 
 interface SceneDisplayProps {
   scene: SceneResponse;
+  showInfo: boolean;
 }
 
-export default function SceneDisplay({ scene }: SceneDisplayProps) {
-
-  const img = useMemo(() => document.createElement("img"), [])
+export default function SceneDisplay({ scene, showInfo }: SceneDisplayProps) {
+  const img = useMemo(() => document.createElement("img"), []);
 
   img.alt = scene.name ?? "";
 
@@ -50,9 +50,14 @@ export default function SceneDisplay({ scene }: SceneDisplayProps) {
       <div className="row h-100">
         <div className="col-sm-12 scene-container">
           <h1 className="text-center">{scene.name}</h1>
+          {showInfo ? (
+            <div className="info-container">
+              <div>{scene.type}</div>
+            </div>
+          ) : null}
           <div className="image-container" />
         </div>
       </div>
     </div>
-  ); 
+  );
 }
