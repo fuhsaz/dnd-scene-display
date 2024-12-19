@@ -25,7 +25,7 @@ export default function SceneForm({ onSave, scene }: SceneFormProps) {
   };
 
   function isFormIncomplete() {
-    return !(!!file && !!name && !!type);
+    return !(!!(file || scene) && !!name && !!type);
   }
 
   async function confirmDeleteImage(url: string) {

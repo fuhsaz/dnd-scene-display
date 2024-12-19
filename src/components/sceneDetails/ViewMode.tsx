@@ -8,11 +8,12 @@ interface SceneViewModeProps {
   setMode: React.Dispatch<React.SetStateAction<string>>
 }
 
-export default function SceneViewMode({scene}: SceneViewModeProps) {
+export default function SceneViewMode({scene, setMode}: SceneViewModeProps) {
+
   
   return(
     <div className="h-100">
-      <SceneDisplay scene={scene} showInfo={true}/>
+      <SceneDisplay scene={scene} showInfo={true} isManagePage={true} setMode={setMode}/>
     </div>
   )
 }
