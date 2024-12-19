@@ -7,8 +7,6 @@ import React, {
 import { createPortal } from "react-dom";
 import { SortedScenes } from "../../types";
 import Control from "./Control";
-import { useAppDispatch } from "../reducers/hooks";
-import { setControlVisibility } from "../reducers/appStateSlice";
 
 interface ControlWindowProps {
   // Add a close button to the control
@@ -18,8 +16,6 @@ interface ControlWindowProps {
 
 const ControlWindow = forwardRef(
   ({ sortedScenes, styles }: ControlWindowProps, ref) => {
-
-    const dispatch = useAppDispatch();
 
     const windowRef = useRef<Window | null>(null);
     const containerElement: HTMLDivElement = document.createElement("div");
