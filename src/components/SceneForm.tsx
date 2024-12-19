@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { deleteImage } from "../service/image";
 
 interface SceneFormProps {
-  onSave: (scene: Scene, file: File | null, deleteFile: boolean, redirect: boolean) => void;
+  onSave: (scene: Scene, file: File | null, redirect: boolean, deleteFile?: boolean ) => void;
   scene: Scene | null;
 }
 

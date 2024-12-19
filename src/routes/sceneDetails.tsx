@@ -24,13 +24,13 @@ function SceneDetails() {
 
   }, [scene.url]);
 
-  const handleUpdateScene = async (scene: Scene, file: File | null, deleteFile: boolean, redirect: boolean) => {
+  const handleUpdateScene = async (scene: Scene, file: File | null, redirect: boolean, deleteFile?: boolean) => {
     const imageId = crypto.randomUUID();
     let path = "";
 
     if (file) {
       const result = await uploadImage(imageId, file);
-      console.log("result:", result);
+      console.log("result:", result); 
       
       if (!result) {
         console.error("no result returned from uploadData");

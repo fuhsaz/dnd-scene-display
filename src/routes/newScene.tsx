@@ -8,7 +8,7 @@ export default function NewScene() {
   const { revalidate } = useRevalidator();
   const navigate = useNavigate();
 
-  const handleSaveNewScene = async (scene: Scene, file: File | null, deleteFile: boolean, redirect: boolean) => {
+  const handleSaveNewScene = async (scene: Scene, file: File | null, redirect: boolean) => {
 
     const imageId = crypto.randomUUID();
     let path = "";
@@ -42,7 +42,7 @@ export default function NewScene() {
       
       if (redirect) {
         navigate(`/manage/${scene.type}`);
-      } else {
+      } else { 
         revalidate();
       }
 

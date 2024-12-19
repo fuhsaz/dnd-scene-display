@@ -70,10 +70,11 @@ const ControlWindow = forwardRef(
       });
     }
 
-    function close() {
-      windowRef.current?.close();
-      dispatch(setControlVisibility(false));
-    }
+    // Not currently using a passed ref any more, will remove on final cleanup if this stays true
+    // function close() {
+    //   windowRef.current?.close();
+    //   dispatch(setControlVisibility(false));
+    // }
 
     return (
       <>

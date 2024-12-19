@@ -9,7 +9,7 @@ interface SceneDisplayProps {
   scene: SceneResponse;
   showInfo: boolean;
 
-  setMode: React.Dispatch<React.SetStateAction<string>>
+  setMode?: React.Dispatch<React.SetStateAction<string>>
 }
 
 export default function SceneDisplay({
@@ -50,7 +50,7 @@ export default function SceneDisplay({
         const imageContainer = document.querySelector(".image-container");
 
         const containerWidth = imageContainer?.clientWidth;
-        const containerHeight = imageContainer?.clientHeight;
+        const containerHeight = imageContainer?.clientHeight; 
 
         img.style.maxHeight = `${containerHeight}px`;
         img.style.maxWidth = `${containerWidth}px`;
@@ -76,7 +76,7 @@ export default function SceneDisplay({
             <h1 className="text-center">{scene.name}</h1>
             {isManagePage ? (
               <div className="btn-group position-absolute top-0 end-0 pt-1">
-                <button type="button" className="btn btn-outline-primary me-3" onClick={() => { setMode("edit") }}>Edit</button>
+                <button type="button" className="btn btn-outline-primary me-3" onClick={() => { if (setMode) setMode("edit") }}>Edit</button>
                 <button type="button" className="btn btn-outline-danger" onClick={() => {confirmDeleteScene(scene.id ?? "")}}>Delete</button>
               </div>
             ) : null}
